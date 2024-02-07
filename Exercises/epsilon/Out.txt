@@ -1,0 +1,2 @@
+My max int = 2147483647, with MaxValue = 2147483647
+My min int = -2147483648, with MinValue = -2147483648
