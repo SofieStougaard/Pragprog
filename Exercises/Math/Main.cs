@@ -1,4 +1,3 @@
-using System;
 using static System.Console;
 using static System.Math;
 static class main{
