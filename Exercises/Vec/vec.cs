@@ -30,16 +30,16 @@ public class vec{
 	public static double norm(vec u)
 		{return Sqrt(Pow(u.x,2)+Pow(u.y,2)+Pow(u.z,2));}
 
-	static bool approx(double a,double b,double acc=1e-9,double eps=1e-9){
+	public bool approx_d(double a,double b,double acc=1e-9,double eps=1e-9){
 		if(Abs(a-b)<acc)return true;
 		if(Abs(a-b)<(Abs(a)+Abs(b))*eps)return true;
 		return false;
 	}
 
 	public bool approx(vec other){
-		if(!approx(this.x,other.x))return false;
-		if(!approx(this.y,other.y))return false;
-		if(!approx(this.z,other.z))return false;
+		if(!approx_d(this.x,other.x))return false;
+		if(!approx_d(this.y,other.y))return false;
+		if(!approx_d(this.z,other.z))return false;
 		return true;
 	}
 
