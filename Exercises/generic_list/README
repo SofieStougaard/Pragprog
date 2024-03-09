@@ -1,0 +1,4 @@
+To run the code in this folder, do the following steps:
+1. make genlist.dll
+2. make main.exe
+3. mono main.exe < input.txt

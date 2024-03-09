@@ -1,0 +1,1 @@
+to run this code type "echo 1 2 3 4 5 | mono main.exe 2> out.txt" in the command-line after the main.exe has been made
