@@ -1,0 +1,4 @@
+A=V*D*V^T : True
+D=V^T*A*V : True
+V^T*V=1 : True
+V*V^T : True

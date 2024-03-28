@@ -22,9 +22,32 @@ public static class Jacobi{
 		}
 	}//End of Jtimes
 
-	/*public static void cyclic(matrix A, vector w, matrix V){
-	
-	}//End of cyclic*/
+	public static (matrix, matrix, matrix, matrix) cyclic(matrix A, matrix V){
+		matrix oldA = A.copy();
+		matrix oldV = V.copy();
+		bool changed;
+		int n = A.size1; // Assuming A is square
+		do{
+			changed = false;
+			for (int p = 0; p < n - 1; p++){
+				for (int q = p + 1; q < n; q++){
+					double apq = A[p, q], app = A[p, p], aqq = A[q, q];
+					double theta = 0.5 * Atan2(2 * apq, aqq - app);
+					double c = Cos(theta), s = Sin(theta);
+					double new_app = c * c * app - 2 * s * c * apq + s * s * aqq;
+					double new_aqq = s * s * app + 2 * s * c * apq + c * c * aqq;
+					if (new_app != app || new_aqq != aqq){
+						changed = true;
+						timesJ(A, p, q, theta); // A←A*J 
+						Jtimes(A, p, q, -theta); // A←JT*A 
+						timesJ(V, p, q, theta); // V←V*J
+					}
+				}
+			}
+		}
+		while (changed);
+		return (oldA, A, oldV, V);
+	}//End of cyclic
 }//End of Jacobi
 
 public static class Matrix{
@@ -44,8 +67,13 @@ public static class Matrix{
 public static class main{
 	static void Main(){
 		matrix A = Matrix.Random(3,3);
-		A.print();
-		//Jacobi.Jtimes(A, 1, 2, 3.14);
+		matrix v = matrix.id(A.size2);
 		//A.print();
+		(matrix oldA, matrix D, matrix oldV, matrix updV) = Jacobi.cyclic(A, v);
+		//updV.print();
+		WriteLine($"A=V*D*V^T : {oldA.approx(updV*D*updV.T)}");
+		WriteLine($"D=V^T*A*V : {D.approx(updV.T*oldA*updV)}");
+		WriteLine($"V^T*V=1 : {oldV.approx(updV.T*updV)}");
+		WriteLine($"V*V^T : {oldV.approx(updV*updV.T)}");
 	}//end of Main()
 }//end of main
