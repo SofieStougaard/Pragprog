@@ -5,19 +5,13 @@ using static matrix;
 
 public static class QRGS{
 	public static (matrix,matrix) decomp(matrix A){
-		matrix Q = A.copy();
+		matrix Q = new matrix(A.size1, A.size2);
 		matrix R = new matrix(A.size2,A.size2);
-		/* orthogonalize Q and fill-in R */
-		vector u1 = Matrix.Vecs(A)[0];
-		vector e1 = u1/u1.norm();
 		
 		vector[] As = new vector[A.size2];
-		As[0] = u1;
-
 		vector[] orthoVecs = new vector[A.size2];
-		orthoVecs[0] = e1;
-
-		for (int i=1; i<A.size2; i++){
+		
+		for (int i=0; i<A.size2; i++){
 			vector ai = Matrix.Vecs(A)[i];
 			vector ui = ai;
 			for (int j=0; j<i; j++){
@@ -37,12 +31,47 @@ public static class QRGS{
 		
 		return (Q,R);
 	}
-/*	
-	public static vector solve(matrix Q, matrix R, vector b){ ... }
-	public static double det(matrix R){ ... }
-	public static matrix inverse(matrix Q,matrix R){ ... }
 
-	*/
+	public static vector solve(matrix Q, matrix R, vector b){
+		int size = b.size;
+		vector x = new vector(size);
+		matrix Q_trans = Q.T;
+		vector QTb = Q_trans*b;
+
+		for (int i=size-1; i>=0; i--){
+			double sum = 0;
+			for (int j=i; j<size; j++){
+				sum += R[i,j]*x[j];
+			}
+			x[i] = (QTb[i]-sum)/R[i,i];
+		}
+				
+		return x;
+	}
+	public static double det(matrix R){ 
+       		int size = R.size1;
+		double det = 1;
+		for (int i=0; i<size; i++){
+			det *= R[i,i];
+		}
+		return det;
+	}
+	public static matrix inverse(matrix Q,matrix R){
+		matrix B = new matrix(R.size1, R.size2);
+		matrix Q_trans = Q.T;
+		vector[] xs = new vector[R.size1];
+
+		for (int i=0; i<R.size1; i++){
+			vector ei = new vector(R.size2);
+                	ei[i] = 1;
+			xs[i] = solve(Q, R, ei);
+		}
+		B = Matrix.VecsToMatrix(xs);
+
+		return B;
+	}
+
+	
 }//QRGS
 
 public static class Matrix{
@@ -83,28 +112,26 @@ public static class Matrix{
 }//Matrix
 
 public static class main{
-	static void Main(){
-		matrix I = new matrix(7);
-		I = matrix.id(7);	
-		matrix A = Matrix.Random(7, 5);
-		WriteLine($"Matrix A:\n");
-		A.print();
+	static void Main(){	
+		matrix A = Matrix.Random(3, 3);
+		matrix I = matrix.id(A.size2);
+		vector b = new vector(1,1,1);
+		//WriteLine($"Matrix A:\n");
+		//A.print();
 		WriteLine($"\n");
-
-		vector a0 = Matrix.Vecs(A)[0];
-		a0.print();
-		WriteLine($"\n");
-		vector a4 = Matrix.Vecs(A)[4];
-		a4.print();
-                WriteLine($"\n");
-	/*	
 		(matrix Q, matrix R) = QRGS.decomp(A);
-		matrix a = Q*R;
-		WriteLine($"A=Q*R : {a.approx(A)} \n");
-		WriteLine($"Q^T*Q=I : {I.approx(Q*Q.transpose())} \n");
-
-		matrix q = Q*Q.transpose();
-		q.print();
-*/
+		vector x = QRGS.solve(Q,R,b);
+		//x.print();
+		//Q.print();
+		//R.print();
+		WriteLine($"A=Q*R : {A.approx(Q*R)}");
+		WriteLine($"Q^T*Q=I : {I.approx(Q.T*Q)}");
+		WriteLine($"Q*R*x=b : {b.approx(Q*R*x)}");
+		WriteLine($"A*x=b : {b.approx(A*x)}");
+		WriteLine($"det(R): {QRGS.det(R)}");
+		//R.print();
+		matrix A_inverse = QRGS.inverse(Q,R);
+		//A_inverse.print();
+		WriteLine($"A*A^-1=I : {I.approx(A*A_inverse)}");
 	}//Main
 }//main
