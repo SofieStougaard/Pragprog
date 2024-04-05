@@ -46,7 +46,7 @@ public static class main{
 		Console.WriteLine("Size of dydiv: " + dydiv.size);
 		*/
 
-		(vector c, matrix S) = LS.lsfit(Decay, t, yRa, dy);
+		(vector c, matrix S) = LS.lsfit(Decay, t, yRalog, dy);
 		//c.print();
 		//dy.print();
 		

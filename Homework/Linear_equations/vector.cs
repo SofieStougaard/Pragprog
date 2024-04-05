@@ -148,4 +148,12 @@ public bool approx(vector o){
 	return true;
 	}
 
+public vector T {
+    get {
+        vector transposed = new vector(this.size, this[0]);
+        return transposed;
+    }
+}
+
+
 }//vector

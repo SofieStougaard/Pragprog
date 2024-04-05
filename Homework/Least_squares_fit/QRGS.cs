@@ -2,7 +2,6 @@ using System;
 using static System.Console;
 using static matrix;
 
-
 public static class QRGS{
 	public static (matrix,matrix) decomp(matrix A){
 		matrix Q = new matrix(A.size1, A.size2);
@@ -33,14 +32,16 @@ public static class QRGS{
 	}
 
 	public static vector solve(matrix Q, matrix R, vector b){
-		int size = R.size2;
+		int size = b.size;
 		vector x = new vector(size);
-		matrix Q_trans = Q.T;
-		//Console.WriteLine("Dimensions of Q_trans: " + Q_trans.size1 + " x " + Q_trans.size2);
-		b.print();
-		Console.WriteLine("Dimensions of b: " + b.size);
-		vector QTb = Q_trans*Matrix.T(b);
-
+		//Console.WriteLine("Dimensions of Q_trans: " + (Q.T).size1 + " x " + (Q.T).size2);
+		//(Q.T).print();
+		//vector bT = b.T;
+		//bT.print();
+		//Console.WriteLine("Dimensions of b: " + (b).size);
+		//(b).print();
+		vector QTb = Q.T*b;
+		//QTb.print();
 		for (int i=size-1; i>=0; i--){
 			double sum = 0;
 			for (int j=i; j<size; j++){
@@ -112,12 +113,5 @@ public static class Matrix{
 		}
 		return VTM;
 	}//VecsToMatrix
-
-	public vector T{
- 		get{
-        		vector transposed = new vector(this.size, this[0]);
-        	return transposed;
-    		}
-	}//T
 }//Matrix
 
