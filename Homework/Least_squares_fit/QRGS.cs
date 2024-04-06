@@ -33,7 +33,6 @@ public static class QRGS{
 	}
 
 	public static vector solve(matrix Q, matrix R, vector b){
-		int n = Q.size1;
 		int m = Q.size2;
 		int size = b.size;
 		vector x = new vector(size);
@@ -58,16 +57,14 @@ public static class QRGS{
 		return det;
 	}
 	public static matrix inverse(matrix Q,matrix R){
-		matrix B = new matrix(R.size1, R.size2);
-		matrix Q_trans = Q.T;
-		vector[] xs = new vector[R.size1];
-
-		for (int i=0; i<R.size1; i++){
-			vector ei = new vector(R.size2);
+		matrix A = Q*R;
+		matrix B = A.copy();
+		
+		for (int i=0; i<A.size2; i++){
+			vector ei = new vector(A.size2);
                 	ei[i] = 1;
-			xs[i] = solve(Q, R, ei);
+			B[i] = solve(Q, R, ei); 
 		}
-		B = Matrix.VecsToMatrix(xs);
 
 		return B;
 	}
