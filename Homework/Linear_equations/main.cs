@@ -113,22 +113,22 @@ public static class Matrix{
 
 public static class main{
 	static void Main(){	
-		matrix A = Matrix.Random(3, 3);
+		matrix A = Matrix.Random(7, 3);
 		matrix I = matrix.id(A.size2);
 		vector b = new vector(1,1,1);
 		//WriteLine($"Matrix A:\n");
 		//A.print();
 		WriteLine($"\n");
 		(matrix Q, matrix R) = QRGS.decomp(A);
-		vector x = QRGS.solve(Q,R,b);
+		//vector x = QRGS.solve(Q,R,b);
 		//x.print();
-		//Q.print();
-		//R.print();
+		Q.print();
+		R.print();/*
 		WriteLine($"A=Q*R : {A.approx(Q*R)}");
 		WriteLine($"Q^T*Q=I : {I.approx(Q.T*Q)}");
 		WriteLine($"Q*R*x=b : {b.approx(Q*R*x)}");
 		WriteLine($"A*x=b : {b.approx(A*x)}");
-		WriteLine($"det(R): {QRGS.det(R)}");
+		WriteLine($"det(R): {QRGS.det(R)}");*/
 		//R.print();
 		matrix A_inverse = QRGS.inverse(Q,R);
 		//A_inverse.print();

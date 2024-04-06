@@ -20,38 +20,35 @@ public static class QRGS{
 			As[i] = ai;
 			orthoVecs[i] = ei;
 		}
+
 		Q = Matrix.VecsToMatrix(orthoVecs);
-		
 		for (int i=0; i<A.size2; i++){
 			for (int j=0; j<A.size2; j++){
 				R[i,j] = As[j].dot(orthoVecs[i]);
 			}
 		}
 		
+		
 		return (Q,R);
 	}
 
 	public static vector solve(matrix Q, matrix R, vector b){
+		int n = Q.size1;
+		int m = Q.size2;
 		int size = b.size;
 		vector x = new vector(size);
-		//Console.WriteLine("Dimensions of Q_trans: " + (Q.T).size1 + " x " + (Q.T).size2);
-		//(Q.T).print();
-		//vector bT = b.T;
-		//bT.print();
-		//Console.WriteLine("Dimensions of b: " + (b).size);
-		//(b).print();
 		vector QTb = Q.T*b;
-		//QTb.print();
-		for (int i=size-1; i>=0; i--){
+
+		for (int i=m-1; i>=0; i--){
 			double sum = 0;
-			for (int j=i; j<size; j++){
+			for (int j=i+1; j<m; j++){
 				sum += R[i,j]*x[j];
 			}
 			x[i] = (QTb[i]-sum)/R[i,i];
 		}
-				
 		return x;
 	}
+
 	public static double det(matrix R){ 
        		int size = R.size1;
 		double det = 1;

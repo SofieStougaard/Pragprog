@@ -2,7 +2,7 @@ using System;
 using static System.Console;
 
 public static class LS{
-	public static (vector, matrix) lsfit(Func<double,double>[] fs, vector x, vector y, vector dy){
+	public static vector lsfit(Func<double,double>[] fs, vector x, vector y, vector dy){
 		int n = x.size;
 		int m = fs.Length;
 		matrix A = new matrix(n, m);
@@ -13,11 +13,16 @@ public static class LS{
 				A[i,k] = fs[k](x[i])/dy[i];
 			}
 		}
+		
 		(matrix Q, matrix R) = QRGS.decomp(A);
+		//WriteLine("Q size: " +Q.size1+ "x" +Q.size2);
+		//WriteLine("R size: " +R.size1+ "x" +R.size2);
+		//WriteLine("b size: " +b.size);	
 		vector c = QRGS.solve(Q, R, b); // solves | |A∗c−b||−>min
-		matrix AI = QRGS.inverse(Q,R); // calculates pseudoinverse
-		matrix Σ = AI*AI.T;
-		return (c, Σ);
+		//matrix AI = QRGS.inverse(Q,R); // calculates pseudoinverse
+		//matrix Σ = AI*AI.T;
+		return (c);
+		//return(A, Q,R);
 	}
 
 }//End of LS
@@ -39,16 +44,12 @@ public static class main{
 			yRalog[i] = Math.Log(yRa[i]);
 			dydiv[i] = dy[i]/yRa[i];
 		}
-		/*
-		Console.WriteLine("Size of yRa: " + yRa.size);
-		Console.WriteLine("Size of yRalog: " + yRalog.size);
-		Console.WriteLine("Size of dy: " + dy.size);
-		Console.WriteLine("Size of dydiv: " + dydiv.size);
-		*/
 
-		(vector c, matrix S) = LS.lsfit(Decay, t, yRalog, dy);
-		//c.print();
-		//dy.print();
+		vector c = LS.lsfit(Decay, t, yRalog, dy);
+		//A.print();
+		c.print();
+		//S.print();
+
 		
         }//End of Main()
 }//End of main
