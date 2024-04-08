@@ -17,12 +17,11 @@ public static class LS{
 		}
 		
 		(matrix Q, matrix R) = QRGS.decomp(A);	
-		vector fit = QRGS.solve(Q, R, b); // solves | |A∗c−b||−>min
-		
-		matrix RTR = R.T*R;
-		(matrix pre_cov_Q, matrix pre_cov_R) = QRGS.decomp(RTR);
-		matrix RTR_inv = QRGS.inverse(pre_cov_Q, pre_cov_R);
-		return (fit, RTR_inv);
+		vector fit = QRGS.solve(Q, R, b); // solves | |A∗c−b||−>min	
+
+		matrix R_inv = QRGS.inverse(R);
+		matrix Cov = R_inv*(R_inv.T);
+		return (fit, Cov);
 		}
 }//End of LS
 
@@ -53,25 +52,25 @@ public static class main{
 			}
 		}
 
-		(vector c, matrix S) = LS.lsfit(Decay, t, yRalog, dy);
+		(vector c, matrix S) = LS.lsfit(Decay, t, yRalog, dydiv);
 		string bestfit = "bestfit.txt";
 		using (StreamWriter writer = new StreamWriter(bestfit)){
 			for (double i=t[0]-0.5; i<t[t.size-1]+0.5; i+=1.0/64){
-				writer.WriteLine($"{i} {c[0]-c[1]*i}");
+				writer.WriteLine($"{i} {Math.Exp(c[0]-c[1]*i)}");
 			}
 		}
 
 		string bestfit_m = "bestfit_m.txt";
                 using (StreamWriter writer = new StreamWriter(bestfit_m)){
                         for (double i=t[0]-0.5; i<t[t.size-1]+0.5; i+=1.0/64){
-                                writer.WriteLine($"{i} {(c[0]-Math.Sqrt(S[0,0]))-(c[1]+Math.Sqrt(S[1,1]))*i}");
+                                writer.WriteLine($"{i} {Math.Exp((c[0]-Math.Sqrt(S[0,0]))-(c[1]+Math.Sqrt(S[1,1]))*i)}");
                         }
                 }
 
 		string bestfit_p = "bestfit_p.txt";
                 using (StreamWriter writer = new StreamWriter(bestfit_p)){
                         for (double i=t[0]-0.5; i<t[t.size-1]+0.5; i+=1.0/64){
-                                writer.WriteLine($"{i} {(c[0]+Math.Sqrt(S[0,0]))-(c[1]-Math.Sqrt(S[1,1]))*i}");
+                                writer.WriteLine($"{i} {Math.Exp((c[0]+Math.Sqrt(S[0,0]))-(c[1]-Math.Sqrt(S[1,1]))*i)}");
                         }
                 }
 

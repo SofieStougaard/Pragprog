@@ -1,8 +1,6 @@
-
-
 A=Q*R : True
 Q^T*Q=I : True
 Q*R*x=b : True
 A*x=b : True
-det(R): 42.4215544212983
+det(R): 213167.42902992
 A*A^-1=I : True

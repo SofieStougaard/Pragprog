@@ -85,6 +85,15 @@ public static class Matrix{
 		}
 		return RandomMatrix;
 	}// Random matrix
+
+	public static vector Random(int size){
+                vector RandomVector = new vector(size);
+                var rnd = new System.Random(1);
+                for (int i=0; i<size; i++){
+			RandomVector[i] = rnd.NextDouble()*10 - 5;
+                }
+                return RandomVector;
+        }// Random vector
 	
 	public static vector[] Vecs(matrix A){
 		vector[] columns = new vector[A.size2]; //Matrix of rows=size2 and column=1
@@ -113,25 +122,20 @@ public static class Matrix{
 
 public static class main{
 	static void Main(){	
-		matrix A = Matrix.Random(3, 3);
+		matrix A = Matrix.Random(8, 8);
 		matrix I = matrix.id(A.size2);
-		vector b = new vector(1,1,1);
-		//WriteLine($"Matrix A:\n");
-		//A.print();
-		//WriteLine($"\n");
+		vector b = Matrix.Random(8);
+		
 		(matrix Q, matrix R) = QRGS.decomp(A);
 		vector x = QRGS.solve(Q,R,b);
-		//x.print();
-		//Q.print();
-		//R.print();
+		
 		WriteLine($"A=Q*R : {A.approx(Q*R)}");
 		WriteLine($"Q^T*Q=I : {I.approx(Q.T*Q)}");
 		WriteLine($"Q*R*x=b : {b.approx(Q*R*x)}");
 		WriteLine($"A*x=b : {b.approx(A*x)}");
 		WriteLine($"det(R): {QRGS.det(R)}");
-		//R.print();
+		
 		matrix A_inverse = QRGS.inverse(Q,R);
-		//A_inverse.print();
 		WriteLine($"A*A^-1=I : {I.approx(A*A_inverse)}");
 	}//Main
 }//main

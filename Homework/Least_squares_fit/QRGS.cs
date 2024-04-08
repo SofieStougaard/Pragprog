@@ -35,17 +35,17 @@ public static class QRGS{
 	public static vector solve(matrix Q, matrix R, vector b){
 		int m = Q.size2;
 		int size = b.size;
-		vector x = new vector(size);
+		//vector x = new vector(size);
 		vector QTb = Q.T*b;
 
 		for (int i=m-1; i>=0; i--){
 			double sum = 0;
 			for (int j=i+1; j<m; j++){
-				sum += R[i,j]*x[j];
+				sum += R[i,j]*QTb[j];
 			}
-			x[i] = (QTb[i]-sum)/R[i,i];
+			QTb[i] = (QTb[i]-sum)/R[i,i];
 		}
-		return x;
+		return QTb;
 	}
 
 	public static double det(matrix R){ 
@@ -57,17 +57,23 @@ public static class QRGS{
 		return det;
 	}
 	public static matrix inverse(matrix Q,matrix R){
-		matrix A = Q*R;
-		matrix B = A.copy();
+		matrix B = R.copy();
 		
-		for (int i=0; i<A.size2; i++){
-			vector ei = new vector(A.size2);
+		for (int i=0; i<R.size1; i++){
+			vector ei = new vector(R.size1);
                 	ei[i] = 1;
-			B[i] = solve(Q, R, ei); 
+			B[i] = solve(Q, R, ei);
+		       	ei[i] = 0;	
 		}
 
 		return B;
 	}
+
+	public static matrix inverse(matrix A){
+                (matrix Q, matrix R) = decomp(A);
+		matrix B = inverse(Q,R);
+                return B;
+        }
 
 	
 }//QRGS
