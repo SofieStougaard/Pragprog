@@ -1,0 +1,7 @@
+sqrt(i)=0.707+0.707i should be equal to 0.707+0.707i: True
+sqrt(-1)=6.12e-17+1i should be equal to 0+1i: True
+e^i=0.54+0.841i should be equal to 0.54+0.841i: True
+e^(i*pi)=-1+1.22e-16i should be equal to -1+0i: True
+i^i=0.208+0i should be equal to 0.208+0i: True
+ln(i)=0+1.57i should be equal to 0+1.57i: True
+sin(i*pi)=0+11.5i should be equal to 0+11.5i: True

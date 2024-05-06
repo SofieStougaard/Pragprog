@@ -8,5 +8,5 @@ genlist.dll : genlist.cs
 	mcs -target:library -out:genlist.dll genlist.cs
 
 clean:
-	rm -f [oO]ut.txt main.exe
+	rm -f [oO]ut.txt main.exe *.dll
 
