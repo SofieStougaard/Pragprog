@@ -2,7 +2,7 @@ class main{
 public static int Main(string[] args){
 	foreach (var arg in args){
 		if (arg == "erf"){
-			for(double x=-5;x<=5;x+=1.0/8){
+			for(double x=-5;x<=5;x+=1.0/128){
 			System.Console.WriteLine($"{x} {sfuns.erf(x)}");
 			}
 		}
@@ -14,7 +14,7 @@ public static int Main(string[] args){
 		}
 	
 		else if (arg == "lngamma"){
-			for(double x=-5;x<=5;x+=1.0/8){
+			for(double x=-5;x<=5;x+=1.0/128){
                         System.Console.WriteLine($"{x} {sfuns.lngamma(x)}");
 			}
 		}
