@@ -1,0 +1,14 @@
+\
+	set terminal svg background "white" ;\
+	set out "Linterp.gnuplot.svg" ;\
+	set key right top ;\
+	set xlabel "x";\
+	set ylabel "y";\
+	set title "Linear interpolation" ;\
+	set tics out ;\
+	set grid ;\
+	plot \
+		"data.txt" using 1:2 linestyle 7 title "datapoints" \
+		,"linterp.txt" using 1:2 with lines title "Spline" \
+		,"linterp.txt" using 1:3 with lines title "Integral" ;\
+
