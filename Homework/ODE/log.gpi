@@ -1,0 +1,10 @@
+\
+	set terminal svg background "white" ;\
+	set out "HarmOsci.gnuplot.svg" ;\
+	set key right top ;\
+	set tics out ;\
+	set grid ;\
+	plot \
+		"HarmOsci.txt" using 1:2 with lines title "u" \
+		,"HarmOsci.txt" using 1:3 with lines title "u^{l}" ;\
+
