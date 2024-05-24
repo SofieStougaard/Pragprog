@@ -1,0 +1,9 @@
+\
+	set terminal svg background "white" ;\
+	set out "Erf.gnuplot.svg" ;\
+	set key right top ;\
+	set tics out ;\
+	set grid ;\
+	plot \
+		"erf.txt" using 1:2 with lines title "Erf" ;\
+
