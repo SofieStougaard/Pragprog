@@ -29,5 +29,8 @@ plot.gif : frames
 	convert -delay 15 -loop 1 frame_*.png plot.gif
 
 clean:
-	rm -f *.dll *.exe *.txt *.svg *.gpi *.png
+	rm -f frame_*.png
+
+clean_all:
+	rm -f *.dll *.exe *.txt *.svg *.gpi *.png *.gif
 
