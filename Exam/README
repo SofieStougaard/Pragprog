@@ -1,0 +1,19 @@
+Mit eksamensprojekt er nr 8, hvilket er at skulle implementere algorithmen Accelerated Particle Swarm Optimization Algorith (APSO).
+Jeg vil vurdere jeg har løst opgaven 7/10, da jeg godt kunne have testet min kode på flere tilfælde så som Rastrigin funktionen.
+
+Jeg har lavet en klasse kaldet Particle, som opretter hver partikel og giver den en startposition. Det kan være i flere dimensioner, som man selv kan styre, så det kan passe til hvert problem.
+I denne klasse findes objektet "UpdatedPosition" også, hvilket er den som opdatere positionen af hver partikel, ved (1-β)xi+βg+αv, hvor der i klassen er givet værdier for beta og alpha. Dette objekt er afhængig af den globale bedst fundne position.
+
+Jeg har derefter lavet selve algorithmen, som en klasse for sig selv. Dder er igen en contructor, som opretter hele sværmen af partikler, hvorefter der et objekt som kan opdatere den globale bedste placeering af en partikel. Denne kopier værdierne ind i arrayet globalbest så man kan bruge den når man skal opdatere placringen, som afhænger af den globale bedste placering.
+Der er også en evaluerings objekt, hvor jeg har brugt cirklens formel, da den har et kendt minimum, så den var god at bruge til at teste om mit program kunne finde mimimumspunktet. Det er dog ikke nok at gøre det en gang kun, man skal køre hele denne algorithme indtil minimumspunktet findes, hvilket er det som iterate obejctet gør. Den bliver ved med at opdatere partiklernes position, hvorved en ny globalbedst måske findes, hvorved der bliver evalueret og så videre. Det er også i iterate objektet at jeg udskriver partiklernes position, så de kan gemmes og laves om til en gif, hvor man kan se at de finder frem til minimumspunktet. 
+
+VIGTIGT: hvis man vil lave gif på den måde som jeg har gjort i Makefile, skal man have installeret ImageMagick.
+
+Noter til mig selv:
+xi ← (1-β)xi+βg+αv
+xi er positionen af den i'te partikel
+β er en parameter mellem 0.1 og 0.7
+α er en parameter mellem 0.1 og 0.5
+g er den globale bedst fundne position fundet af sværmen
+v er en random vektor, som findes et sted i intervallet -(b-a) og (b-a), hvor a og b er det nedereste venstre og øverste højre hjørne af feltet, hvori en løsning skal findes.
+

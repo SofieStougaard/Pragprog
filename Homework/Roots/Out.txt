@@ -1,0 +1,8 @@
+Test function: -2x+5
+Test function root: 2.5
+Rosenbrock's function root: 1, 1
+Himmelblaus function root: -0.127958648720497, -1.95373228074433
+
+
+
+Laveste energi E0 : -0.49998114129207

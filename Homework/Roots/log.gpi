@@ -1,0 +1,11 @@
+\
+	set terminal svg background "white" ;\
+	set out "Hydrogen.gnuplot.svg" ;\
+	set key right top ;\
+	set tics out ;\
+	set grid ;\
+	set xlabel "r [Bohr radius]" ;\
+	set ylabel "f(r) (Radial wave function)" ;\
+	plot \
+		"Hydrogen.txt" using 1:2 with lines notitle ;\
+

@@ -21,8 +21,9 @@ UnitCircle.gnuplot.svg : UnitCircle.txt Makefile
 		set ylabel "Error estimate";\
 		set logscale x 10;\
 		plot \
-			"UnitCircle.txt" using 1:3 with lines title "Monte Carlo"\
-			,"UnitCircle.txt" using 1:4 with lines title "1/sqrt(N)" ;\
+			"UnitCircle.txt" using 1:3 with lines title "Plain Monte Carlo"\
+			,"UnitCircle.txt" using 1:4 with lines title "1/sqrt(N)" \
+		        ,"UnitCircleHalton.txt" using 1:3 with lines title "Halton Monte Carlo"	;\
 	' | tee log.gpi | gnuplot
 
 
