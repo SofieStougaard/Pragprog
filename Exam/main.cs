@@ -7,7 +7,7 @@ public class Particle{
 	double a = -5;
 	double b = 5;
 	double alpha = 0.12; //Typically between 0.1 and 0.5
-	double beta = 0.3; //Typically between 0.1 and 0.7
+	double beta = 0.25; //Typically between 0.1 and 0.7
 	static Random rnd = new System.Random();
 	
 	public double[] Position {get; private set;}
