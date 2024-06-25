@@ -114,12 +114,13 @@ public static class main{
 					});
 		};
 
-		vector start = new vector(2); start[0]=1.0; start[1]=1.0;
+		vector start_r = new vector(2); start_r[0]=1.0; start_r[1]=1.0;
+		vector start_h = new vector(2); start_h[0]=3.0; start_h[1]=3.0;
 
-		vector rosenbrockRoot = Root.Newton(rosenbrockGradient, start);
+		vector rosenbrockRoot = Root.Newton(rosenbrockGradient, start_r);
 		Console.WriteLine($"Rosenbrock's function root: {rosenbrockRoot[0]}, {rosenbrockRoot[1]}");
 
-		vector himmelblauRoot = Root.Newton(himmelblauGradient, start);
+		vector himmelblauRoot = Root.Newton(himmelblauGradient, start_h);
 		Console.WriteLine($"Himmelblaus function root: {himmelblauRoot[0]}, {himmelblauRoot[1]}");
 
 		//Exercise B
