@@ -23,7 +23,7 @@ UnitCircle.gnuplot.svg : UnitCircle.txt Makefile
 		plot \
 			"UnitCircle.txt" using 1:3 with lines title "Plain Monte Carlo"\
 			,"UnitCircle.txt" using 1:4 with lines title "1/sqrt(N)" \
-		        ,"UnitCircleHalton.txt" using 1:3 with lines title "Halton Monte Carlo"	;\
+		        ,"UnitCircleHalton.txt" using 1:3 with lines title "Quasi Monte Carlo"	;\
 	' | tee log.gpi | gnuplot
 
 

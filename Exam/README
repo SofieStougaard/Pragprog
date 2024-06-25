@@ -1,5 +1,5 @@
 Mit eksamensprojekt er nr 8, hvilket er at skulle implementere algorithmen Accelerated Particle Swarm Optimization Algorith (APSO).
-Jeg vil vurdere jeg har løst opgaven 8/10, da jeg godt kunne have testet min kode på flere tilfælde så som Rastrigin funktionen. Jeg har fået lavet det der svare til 73 point og med formlen fra sidste år giver det 7.5.
+Jeg vil vurdere jeg har løst opgaven 9/10. Jeg har fået lavet det der svare til 73 point og med formlen fra sidste år giver det 7.8.
 
 Jeg har lavet en klasse kaldet Particle, som opretter hver partikel og giver den en startposition. Det kan være i flere dimensioner, som man selv kan styre, så det kan passe til hvert problem.
 I denne klasse findes objektet "UpdatedPosition" også, hvilket er den som opdatere positionen af hver partikel, ved (1-β)xi+βg+αv, hvor der i klassen er givet værdier for beta og alpha. Dette objekt er afhængig af den globale bedst fundne position.
