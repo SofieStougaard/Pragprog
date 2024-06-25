@@ -1,6 +1,7 @@
 using System;
 using static System.Console;
 using System.IO;
+using static System.Math;
 
 
 public class Particle{
@@ -43,9 +44,11 @@ public class APSO{
 	Particle[] swarm;
 	double[] globalBest;
 	int dimensions;
+	EvaluationFunction evalFunction;
 
-	public APSO(int dimensions, int swarmSize){
+	public APSO(int dimensions, int swarmSize, EvaluationFunction evalFunction){
 		this.dimensions = dimensions;
+		this.evalFunction = evalFunction;
 		swarm = new Particle[swarmSize]; //making the swarm of N particles
 
 		for (int i = 0; i<swarmSize; i++){
@@ -59,22 +62,12 @@ public class APSO{
 
 	public void updateGlobalBest(){
 		foreach (var particle in swarm){
-			if (Evaluate(particle.Position) < Evaluate(globalBest)){
+			if (evalFunction(particle.Position) < evalFunction(globalBest)){
 				Array.Copy(particle.Position, globalBest, dimensions);
 				//Copier positions into the globalBest array for all dimensions
 			}
 		}
 	}//updateGlobalBest
-
-
-	public double Evaluate(double[] Position){ //Using benchmark functions, ChatGPT recommends Rastrigin, Sphere or Rosenbrock function. I will be using the sphere function here first. It has a minimum in f(x)=0
-		double result = 0;
-		foreach(var x in Position){
-			result += x*x;
-		}
-		return result;
-	}//Evaluate
-
 
 	public void Iterate(int iterations, string filename){
 		using (StreamWriter writer = new StreamWriter(filename)){
@@ -91,7 +84,7 @@ public class APSO{
 	public void logPosition(StreamWriter writer, int iteration){
 		writer.WriteLine($"# Iteration {iteration}");
 		foreach (var particle in swarm) {
-			writer.WriteLine(string.Join(" ", particle.Position));
+			writer.WriteLine(string.Join(" ", particle.Position) + " 0");
 		}
 		writer.WriteLine("\n\n");
 	}
@@ -101,6 +94,25 @@ public class APSO{
 	}//getPosition
 }//APSO
 
+public delegate double EvaluationFunction(double[] position);
+
+public class EvaluationFunctions{
+	public double sphere(double[] Position){
+                double result = 0;
+                foreach(var x in Position){
+                        result += x*x;
+                }
+                return result;
+        }//Evaluate
+
+        public double Rastrigin(double[] Position){
+                double result = 10*Position.Length;
+                foreach(var x in Position){
+                        result += x*x - 10*Cos(2*PI*x);
+                }
+                return result;
+        }//Rastrigin
+}//Ecaluationfunctions
 
 public static class main{
 	static void Main(){
@@ -111,32 +123,48 @@ public static class main{
 				writer.WriteLine("\n\n");
 				writer.WriteLine($"# Radius {R}");
 				for (int i = 0; i < points; i++){
-					double theta = 2*Math.PI*i/points;
+					double theta = 2*PI*i/points;
 
-					double x = R * Math.Cos(theta);
-					double y = R * Math.Sin(theta);
+					double x = R * Cos(theta);
+					double y = R * Sin(theta);
 
 					writer.WriteLine($"{x} {y}");
 				}
 				writer.WriteLine($"{R} 0");
 			}}
-
+/*
+                string ras = "Rastrigin.txt";
+                using (StreamWriter writer = new StreamWriter(ras)){
+                        for (double x = -5; x < 5; x+=0.5){
+                                for (double y = -5; y < 5; y+=0.5){
+                                        double result = 20 + x*x + y*y -10*(Cos(2*PI*x) + Cos(2*PI*y));
+                                        writer.WriteLine($"{x} {y} {result}");
+				}}}
+*/
 
 		int dim = 2; //2D for the sphere to test
 		int swarm = 100;
 		int iterations = 40;
 		string filename = "Positions.txt";
 		
-		APSO apso = new APSO(dim, swarm); //dimensions and swarmsize in that way!!
-		apso.Iterate(iterations, filename);
-	
+		EvaluationFunctions evalFunctions = new EvaluationFunctions();		
+
+		APSO apso = new APSO(dim, swarm, evalFunctions.sphere); //dimensions and swarmsize in that way!!
+		apso.Iterate(iterations, filename);	
 		double[] Position = apso.getPosition();
 		WriteLine("Evaluating the global minimum of the 2D sphere with center in (0,0)");	
 		WriteLine("Best Position: " + string.Join(" ", Position));
 
+		APSO rastrigin = new APSO(dim, swarm, evalFunctions.Rastrigin);
+		string file_ras = "Pos_Rastrigin.txt";
+		rastrigin.Iterate(iterations, file_ras);
+		double[] Position_ras = rastrigin.getPosition();
+		WriteLine("Evaluating the global minimum of the 2D Rastrigin");
+		WriteLine("Best Position: " + string.Join(" ", Position_ras));
+
 		int dims = 3;
 		string file = "3D sphere.txt";
-		APSO threeDSphere = new APSO(dims, swarm);
+		APSO threeDSphere = new APSO(dims, swarm, evalFunctions.sphere);
 		threeDSphere.Iterate(iterations, file);
 		double[] Positions = threeDSphere.getPosition();
 		WriteLine("Evaluating the global minimum of the 3D sphere with center in (0,0,0)");
