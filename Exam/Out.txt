@@ -1,0 +1,4 @@
+Evaluating the global minimum of the 2D sphere with center in (0,0)
+Best Position: 0 0
+Evaluating the global minimum of the 3D sphere with center in (0,0,0)
+Best Position: 0 0 0

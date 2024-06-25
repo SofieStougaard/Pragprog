@@ -131,9 +131,16 @@ public static class main{
 		apso.Iterate(iterations, filename);
 	
 		double[] Position = apso.getPosition();
-		
+		WriteLine("Evaluating the global minimum of the 2D sphere with center in (0,0)");	
 		WriteLine("Best Position: " + string.Join(" ", Position));
-		WriteLine("Everything works ;)");
+
+		int dims = 3;
+		string file = "3D sphere.txt";
+		APSO threeDSphere = new APSO(dims, swarm);
+		threeDSphere.Iterate(iterations, file);
+		double[] Positions = threeDSphere.getPosition();
+		WriteLine("Evaluating the global minimum of the 3D sphere with center in (0,0,0)");
+		WriteLine("Best Position: " + string.Join(" ", Positions));
 
 
 	}//Main
