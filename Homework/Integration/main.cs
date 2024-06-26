@@ -42,8 +42,8 @@ public class Integration{
 		int evaluationCount = 0;
 
 		Func<double, double> transformedF = theta => {
-			double x =  (a + b) / 2 + (b - a) / 2 * Math.Cos(theta);
-			 return f(x) * Math.Sin(theta) * (b - a) / 2;
+			double x =  (a + b)/2 + (b - a)/2*Math.Cos(theta);
+			 return f(x)*Math.Sin(theta)*(b - a)/ 2;
 		};
 		double result = AdaptIntegrate(transformedF, 0, Math.PI, delta, epsilon, ref evaluationCount, f2, f3);
 		return (result, evaluationCount);
@@ -56,13 +56,11 @@ public class Integration{
 		if (double.IsNaN(f2)){
 			f2 = f(a + 2*h/6);
 			f3 = f(a + 4*h/6);
-			evaluationCount += 2;
 		}
 
 		double f1 = f(a + h/6);
 		double f4 = f(a + 5*h/6);
-		evaluationCount += 2;
-		
+				
 		double Q = (2*f1 + f2 + f3 + 2*f4)/6*h;
 		double q = (f1 + f2 + f3 + f4)/4*h;
 		double err = Math.Abs(Q - q);
@@ -86,21 +84,18 @@ public class main{
 		double exactFourSqrt = Math.PI;
 		double exactLnInvSqrt = -4.0;
 		
-		string Out = "Out.txt";
-		using (StreamWriter writer = new StreamWriter(Out)){
-			writer.WriteLine($"Exercise a)");
-			writer.WriteLine($"Integral of sqrt(x) from 0 to 1: {Integration.Integrate(Sqrt, 0, 1)} (Expected: {exactSqrt}, Error: {Math.Abs(Integration.Integrate(Sqrt, 0, 1) - exactSqrt)})");
-			writer.WriteLine($"Integral of 1/sqrt(x) from 0 to 1: {Integration.Integrate(InvSqrt, 0, 1)} (Expected: {exactInvSqrt}, Error: {Math.Abs(Integration.Integrate(InvSqrt, 0, 1) - exactInvSqrt)})");
-			writer.WriteLine($"Integral of 4*sqrt(1-x^2) from 0 to 1: {Integration.Integrate(FourSqrt, 0, 1)} (Expected: {exactFourSqrt}, Error: {Math.Abs(Integration.Integrate(FourSqrt, 0, 1) - exactFourSqrt)})");
-			writer.WriteLine($"Integral of ln(x)/sqrt(x) from 0 to 1: {Integration.Integrate(LnInvSqrt, 0, 1)} (Expected: {exactLnInvSqrt}, Error: {Math.Abs(Integration.Integrate(LnInvSqrt, 0, 1) - exactLnInvSqrt)})");
+		WriteLine($"Exercise a)");
+		WriteLine($"Integral of sqrt(x) from 0 to 1: {Integration.Integrate(Sqrt, 0, 1)} (Expected: {exactSqrt}, Error: {Math.Abs(Integration.Integrate(Sqrt, 0, 1) - exactSqrt)})");
+		WriteLine($"Integral of 1/sqrt(x) from 0 to 1: {Integration.Integrate(InvSqrt, 0, 1)} (Expected: {exactInvSqrt}, Error: {Math.Abs(Integration.Integrate(InvSqrt, 0, 1) - exactInvSqrt)})");
+		WriteLine($"Integral of 4*sqrt(1-x^2) from 0 to 1: {Integration.Integrate(FourSqrt, 0, 1)} (Expected: {exactFourSqrt}, Error: {Math.Abs(Integration.Integrate(FourSqrt, 0, 1) - exactFourSqrt)})");
+		WriteLine($"Integral of ln(x)/sqrt(x) from 0 to 1: {Integration.Integrate(LnInvSqrt, 0, 1)} (Expected: {exactLnInvSqrt}, Error: {Math.Abs(Integration.Integrate(LnInvSqrt, 0, 1) - exactLnInvSqrt)})");
 
-			var (intInvSqrt, evalInvSqrt) = Integration.IntegrateB(Sqrt, 0, 1);
-			var (intLnInvSqrt, evalLnInvSqrt) = Integration.IntegrateB(LnInvSqrt, 0, 1);
-			writer.WriteLine($"\n \n Exercise b)");
-			writer.WriteLine($"Integral of sqrt(x) from 0 to 1: {intInvSqrt} (Expected: {exactSqrt}, Error: {Math.Abs(intInvSqrt - exactSqrt)}), Evaluations: {evalInvSqrt} and with Python 231");
-			writer.WriteLine($"Integral of ln(x)/sqrt(x) from 0 to 1: {intLnInvSqrt} (Expected: {exactLnInvSqrt}, Error: {Math.Abs(intLnInvSqrt - exactLnInvSqrt)}), Evaluations: {evalLnInvSqrt} with Python 315");
-		}
-
+		var (intInvSqrt, evalInvSqrt) = Integration.IntegrateB(Sqrt, 0, 1);
+		var (intLnInvSqrt, evalLnInvSqrt) = Integration.IntegrateB(LnInvSqrt, 0, 1);
+		WriteLine($"\n \n Exercise b)");
+		WriteLine($"Integral of sqrt(x) from 0 to 1: {intInvSqrt} (Expected: {exactSqrt}, Error: {Math.Abs(intInvSqrt - exactSqrt)}), Evaluations: {evalInvSqrt} and with Python 231");
+		WriteLine($"Integral of ln(x)/sqrt(x) from 0 to 1: {intLnInvSqrt} (Expected: {exactLnInvSqrt}, Error: {Math.Abs(intLnInvSqrt - exactLnInvSqrt)}), Evaluations: {evalLnInvSqrt} with Python 315");
+		
 
 		string erf = "erf.txt";
 		using (StreamWriter writer = new StreamWriter(erf)){

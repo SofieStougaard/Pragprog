@@ -6,5 +6,5 @@ Integral of ln(x)/sqrt(x) from 0 to 1: -3.99991705899915 (Expected: -4, Error: 8
 
  
  Exercise b)
-Integral of sqrt(x) from 0 to 1: 0.667991409780629 (Expected: 0.666666666666667, Error: 0.00132474311396202), Evaluations: 245 and with Python 231
-Integral of ln(x)/sqrt(x) from 0 to 1: -3.99254558736254 (Expected: -4, Error: 0.00745441263746072), Evaluations: 1205 with Python 315
+Integral of sqrt(x) from 0 to 1: 0.667991409780629 (Expected: 0.666666666666667, Error: 0.00132474311396202), Evaluations: 81 and with Python 231
+Integral of ln(x)/sqrt(x) from 0 to 1: -3.99254558736254 (Expected: -4, Error: 0.00745441263746072), Evaluations: 401 with Python 315

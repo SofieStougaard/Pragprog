@@ -23,4 +23,4 @@ Erf.gnuplot.svg : erf.txt Makefile
 
 
 clean:
-	rm -f *.dll *.exe *.txt *.svg bestfit*.txt
+	rm -f *.dll *.exe *.txt *.svg *.gpi
