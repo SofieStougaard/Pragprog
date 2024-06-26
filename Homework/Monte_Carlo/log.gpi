@@ -1,14 +1,14 @@
 \
-	set terminal svg background "white" ;\
-	set out "UnitCircle.gnuplot.svg" ;\
-	set key right top ;\
-	set tics out ;\
-	set grid ;\
-	set xlabel "N";\
-	set ylabel "Error estimate";\
-	set logscale x 10;\
-	plot \
-		"UnitCircle.txt" using 1:3 with lines title "Plain Monte Carlo"\
-		,"UnitCircle.txt" using 1:4 with lines title "1/sqrt(N)" \
-	        ,"UnitCircleHalton.txt" using 1:3 with lines title "Halton Monte Carlo"	;\
+                set terminal svg background "white" ;\
+                set out "ValueOfPI.gnuplot.svg" ;\
+                set key right top ;\
+                set tics out ;\
+                set grid ;\
+	set yrange [3.0 : 3.3] ;\
+                set xlabel "N";\
+                set ylabel "Estimate";\
+                plot \
+		"UnitCircle.txt" using 1:2:3 with yerrorbars linestyle 7 lt rgb "violet" title "Plain Monte Carlo"\
+                        ,"UnitCirclequasi.txt" using 1:2:3 with yerrorbars linestyle 7 title "Quasi Monte Carlo" \
+		, 3.1415926 lc rgb "black" title "Value of Pi" ;\
 
