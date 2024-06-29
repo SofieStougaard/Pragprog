@@ -1,6 +1,8 @@
 using System;
 using static System.Console;
 using static System.Math;
+using System.IO;
+using System.Linq;
 
 public static class Minimization{
 	public static (vector, int) Newton(
@@ -29,7 +31,7 @@ public static class Minimization{
 			x += lambda*dx;
 		}
 		return (x, steps);
-	}//Newton
+	}//Newton 
 
 
 	public static vector Gradient(Func<vector,double> phi, vector x){
@@ -84,6 +86,5 @@ public static class main{
 		(vector min_Himmel, int steps_Himmel) = Minimization.Newton(Himmelblau, start_Himmel);
 		WriteLine("Himmelblau's function:");
 		WriteLine($"Minimum found at x={min_Himmel[0]} and y={min_Himmel[1]} with {steps_Himmel} steps");
-
 	}//Main
 }//main

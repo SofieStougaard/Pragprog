@@ -14,4 +14,4 @@ main.exe : main.cs tot.dll matrix.dll
 	mcs main.cs -reference:tot.dll -reference:matrix.dll -target:exe -out:main.exe
 
 clean : 
-	rm -f *.txt *.dll *.exe
+	rm -f [Oo]ut.txt *.dll *.exe

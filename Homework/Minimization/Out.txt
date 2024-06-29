@@ -1,4 +1,0 @@
-Rosenbrock's valley function:
-Minimum found at x=0.99998572039423 and y=0.999971406900703 with 14 steps
-Himmelblau's function:
-Minimum found at x=2.99999727553444 and y=2.0000115409765 with 5 steps
